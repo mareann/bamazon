@@ -16,11 +16,11 @@ CREATE TABLE products (
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Harry Potter And The Order Of The Phoenix   ", "Books",8.50, 10),
        ("Harry Potter And The Goblet Of Fire         ", "Books",9.50, 15),
-       ("End of Watch: A Novel                       ", "Books",16.50, 3),
+       ("End of Watch A Novel                        ", "Books",16.50, 3),
        ("Justice League with Henry Cavill, Amy Adams ","MOVIES",24.95,20),
        ("Wonder with Julia Roberts                   ","MOVIES",18.95,25),
        ("The Greatest Showman                        ","MOVIES",19.95,18),
-       ("DCU: Batman: Gotham By Gaslight             ","MOVIES",16.95,48),
+       ("DCU Batman Gotham By Gaslight               ","MOVIES",16.95,48),
        ("By The Way, I Forgive You Brandi Carlile    ","Music",10.75,77),
        ("Man of the Woods Justin Timberlake          ","Music",9.95,43),
        ("Rumours Fleetwood Mac                       ","Music",20.95,26)

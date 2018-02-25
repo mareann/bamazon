@@ -10,7 +10,7 @@ var pool = mysql.createPool({
   user: "root",
 
   // Your password
-  password: "gross123",
+  password: "",
   database: "bamazon"
 });
 
@@ -26,7 +26,8 @@ pool.getConnection( function(err,connection) {
   poolConnection = connection;
   afterConnection(connection);
 });
-
+//console.log('\x1b[36m%s\x1b[0m','teststring')
+//console.log("\x1b[32mtesting\x1b[0m")
 var inventory = {}
 var inventoryNumberDisplayed = 0;
 var choicesAvailable = []
@@ -34,6 +35,7 @@ var itemID = 0;
 //var itemIDtmp = '';
 var finalCost = 0;
 var orderQuantity = 0;
+var quitString = "quit"
 
 function userChoices()
 {
@@ -42,23 +44,31 @@ function userChoices()
    	choicesAvailable[j]=String(inventory[j].product)+" price:$"+String(inventory[j].price)+String(" id: "+inventory[j].id
    	+":"+inventory[j].stock_quantity)
    }
+   choicesAvailable[j]=quitString
  
 }
 function updateQuantity(connection,item,quantity) {
   //console.log("update connected as id " + connection.threadId);
   
-  var query2 = "UPDATE products SET stock_quantity=stock_quantity-"+quantity+" WHERE item_id="+item
+  var query2 = "UPDATE products SET stock_quantity=stock_quantity-? WHERE item_id=?"
   
-  connection.query(query2, function(err,result) {
+  connection.query(query2, [quantity, item], function(err,result) {
   	if (err) throw err;
   	//console.log(result.affectedRows + " record(s) updated");
   	if (result.affectedRows)
   	{
-  	  console.log("Order processed successfully!")
-  	  console.log("Total Cost: "+"$"+finalCost+" Hope to see you soon!")
+  	  console.log("  \x1b[32mOrder processed successfully!\x1b[0m")
+  	  console.log("  Total Cost: \x1b[32m$"+finalCost+"\x1b[0m\n  Hope to see you soon!")
   	}
   	process.exit(0)
-    
+/* FgBlack = "\x1b[30m"
+FgRed = "\x1b[31m"
+FgGreen = "\x1b[32m"
+FgYellow = "\x1b[33m"
+FgBlue = "\x1b[34m"
+FgMagenta = "\x1b[35m"
+FgCyan = "\x1b[36m"
+FgWhite = "\x1b[37m"  */ 
   });
 }
 
@@ -77,7 +87,8 @@ function afterConnection(connection) {
       // Here we create a basic text prompt.
       {
       //name: availableProducts,
-        type: 'rawlist',
+        //type: 'rawlist',
+        type: 'list',
         message: "  Please enter number of product you would like to buy",
         name: "itemDesc",
         choices:  choicesAvailable
@@ -85,42 +96,64 @@ function afterConnection(connection) {
   // [ "1 Harry Potter And The Order Of The Phoenix 8.5",
   //   "2 Harry Potter And The Goblet Of Fire 9.5",
   //   "3 End of Watch: A Novel (The Bill Hodges Trilogy) 16.5"             ]
-    },
-    {
-    message: "  How many would you like to buy?",
-    type: "input",
-    name: "quantityNum"
-    
     }
+ //   ,
+ //   {
+ //   message: "  How many would you like to buy?",
+ //   type: "input",
+ //   name: "quantityNum"   
+ //   }
   ])
-  .then(function(inquirerResponse) {
+  .then(function(itemSelection) {
+ 
+      if(itemSelection.itemDesc===quitString)
+        {
+          console.log("\x1b[32m\n  See you next time!\x1b[0m")
+          process.exit(0)
+        }
+      else 
+        {
+          var tmp = itemSelection.itemDesc.split(":")
+          var tmp0 = tmp[0].replace("price","").trim();
+          var itemTitle = tmp0;
+          //console.log("itemTitle"+itemTitle)
+          itemID = parseInt(tmp[tmp.length-2])
+          var tmp2 = tmp[tmp.length-3].split(" ") 
+          var Price = parseFloat(tmp2[0].replace('$',''))
+          //console.log("selected item "+itemID+"tmp "+tmp);
+          var inventoryNum = parseInt(tmp[tmp.length-1])
+          //console.log(" inventory of "+inventoryNum)
+          inquirer.prompt([
+            {
+              message: "  How many would you like to buy?",
+              type: "input",
+              name: "quantityNum"   
+            }
+            ])  
+            .then(function(itemQuantity) {
+                   
+              orderQuantity = parseInt(itemQuantity.quantityNum);
+              if (itemQuantity.quantityNum <= inventoryNum)
+              {
+                 if (orderQuantity>1)
+      	           console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemTitle+"\x1b[0m are available!")    	
+                 else
+                   console.log("\x1b[37m\n  YAY!  \x1b[36m"+itemTitle+"\x1b[0m is available!")      
+ 
+      	         finalCost = parseFloat(Price*orderQuantity);
+      	         updateQuantity(connection, itemID, itemQuantity.quantityNum)
+              }
+              else
+	             {
+               	 console.log("\x1b[31m  Sorry. Please reduce your quantity.\x1b[0m")
+              	 console.log("need new prompt here")
+      	         process.exit(0)
+	             }
+          }) // end quantity inquirer
 
-      //console.log("\n"+inquirerResponse.itemDesc)
-      //console.log(inquirerResponse) 
-      var tmp = inquirerResponse.itemDesc.split(":")
-      itemID = parseInt(tmp[tmp.length-2])
-      var tmp2 = tmp[tmp.length-3].split(" ") 
-      var Price = parseFloat(tmp2[0].replace('$',''))
-      //console.log("selected item "+itemID);
-      var inventoryNum = parseInt(tmp[tmp.length-1])
-      //console.log(" inventory of "+inventoryNum)
-      orderQuantity = parseInt(inquirerResponse.quantityNum);
-      if ( inquirerResponse.quantityNum <= inventoryNum)
-      {
-      	console.log("YAY! Those are available!")
-      	
-      	finalCost = Price*orderQuantity;
-      	
-      	updateQuantity(connection,itemID,inquirerResponse.quantityNum)
-      }
-      else
-	  {
-      	console.log("Sorry. Please reduce your quantity.")
-      	console.log("need new prompt here")
-      	process.exit(0)
-	  }
-   });
+        } //else  
+     }); // end selection inquirer
    
-  }); // function err,result
+  }); // function query1 err,result
 
-} // afterConnection
+} // end afterConnection
