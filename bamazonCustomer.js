@@ -22,7 +22,7 @@ pool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 
 pool.getConnection( function(err,connection) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
+  //console.log("connected as id " + connection.threadId);
   poolConnection = connection;
   afterConnection(connection);
 });
@@ -89,7 +89,7 @@ function afterConnection(connection) {
       //name: availableProducts,
         //type: 'rawlist',
         type: 'list',
-        message: "  Please enter number of product you would like to buy",
+        message: "  Please select product you would like to buy",
         name: "itemDesc",
         choices:  choicesAvailable
 
@@ -127,11 +127,23 @@ function afterConnection(connection) {
             {
               message: "  How many would you like to buy?",
               type: "input",
-              name: "quantityNum"   
+              name: "quantityNum",
+              validate: function (value) {
+                   if (isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= 10) {
+                   return true;
+                   }
+                  return false;
+                }     
             }
             ])  
             .then(function(itemQuantity) {
-                   
+              
+           /*   if(isNaN(itemQuantity.quantityNum))
+              {
+                 console.log("not a number")
+              }
+              else
+              {*/
               orderQuantity = parseInt(itemQuantity.quantityNum);
               if (itemQuantity.quantityNum <= inventoryNum)
               {
@@ -149,6 +161,9 @@ function afterConnection(connection) {
               	 console.log("need new prompt here")
       	         process.exit(0)
 	             }
+            //  }
+        
+               
           }) // end quantity inquirer
 
         } //else  
