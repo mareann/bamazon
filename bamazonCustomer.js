@@ -30,7 +30,7 @@ pool.getConnection( function(err,connection) {
 //console.log("\x1b[32mtesting\x1b[0m")
 var inventory = {}
 var inventoryNumberDisplayed = 0;
-var choicesAvailable = []
+var choicesAvailable = [];
 var itemID = 0;
 //var itemIDtmp = '';
 var finalCost = 0;
@@ -80,7 +80,7 @@ function afterConnection(connection) {
     console.log("  BAMAZON BEST SELLERS")
     inventory = result;
     inventoryNumberDisplayed = result.length;
-    userChoices()
+    userChoices();
     // Create a "Prompt" with a series of questions.
     inquirer
     .prompt([
@@ -91,18 +91,8 @@ function afterConnection(connection) {
         type: 'list',
         message: "  Please select product you would like to buy",
         name: "itemDesc",
-        choices:  choicesAvailable
-
-  // [ "1 Harry Potter And The Order Of The Phoenix 8.5",
-  //   "2 Harry Potter And The Goblet Of Fire 9.5",
-  //   "3 End of Watch: A Novel (The Bill Hodges Trilogy) 16.5"             ]
+        choices:  choicesAvailable                  
     }
- //   ,
- //   {
- //   message: "  How many would you like to buy?",
- //   type: "input",
- //   name: "quantityNum"   
- //   }
   ])
   .then(function(itemSelection) {
  
@@ -137,13 +127,7 @@ function afterConnection(connection) {
             }
             ])  
             .then(function(itemQuantity) {
-              
-           /*   if(isNaN(itemQuantity.quantityNum))
-              {
-                 console.log("not a number")
-              }
-              else
-              {*/
+
               orderQuantity = parseInt(itemQuantity.quantityNum);
               if (itemQuantity.quantityNum <= inventoryNum)
               {
@@ -161,8 +145,6 @@ function afterConnection(connection) {
               	 console.log("need new prompt here")
       	         process.exit(0)
 	             }
-            //  }
-        
                
           }) // end quantity inquirer
 
