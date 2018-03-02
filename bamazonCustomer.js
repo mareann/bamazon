@@ -43,7 +43,7 @@ var itemDescription = '';
 var finalCost = 0;
 var orderQuantity = 0;  // number of item requested from the customer prompt
 var quitString = "quit"
-
+/*
 function userChoices()
 {
    for (var j=0;j<inventoryNumberDisplayed;j++)
@@ -54,6 +54,7 @@ function userChoices()
    choicesAvailable[j]=quitString
  
 }
+*/
 function updateQuantity(connection,item,quantity) {
   console.log("updateQuantity "+item+" "+quantity+" "+connection)
   console.log("upd connection "+connection)
@@ -81,7 +82,7 @@ FgWhite = "\x1b[37m"  */
 }
 var prodResult = {};
 
-function getCustomerQuantity(){
+function getCustomerQuantity(connection){
 console.log("getCustomerQuantity")
             inquirer.prompt([
             {
@@ -95,7 +96,7 @@ console.log("getCustomerQuantity")
                     }
                    else
                    { 
-                    console.log(" please reduce quantity");
+                    console.log(" \x1b[31mplease reduce quantity\x1b[0m");
                     //return false;
                    }
                 }     
@@ -118,21 +119,25 @@ console.log("getCustomerQuantity")
               if (orderQuantity <= inventoryQuantity)
               {
                  if (orderQuantity>1)
+                   console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemDescription+"\x1b[0m are available!")     
+                 else
+                   console.log("\x1b[37m\n  YAY!  \x1b[36m"+itemDescription+"\x1b[0m is available!")
+
+                  /*
                    console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[0m are available!")     
                  //  console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemTitle+"\x1b[0m are available!")     
                  else
-                   console.log("\x1b[37m\n  YAY!  \x1b[0m is available!")      
+                   console.log("\x1b[37m\n  YAY!  \x1b[0m is available!")*/   
  console.log("desc "+itemDescription)
-                 //finalCost = parseFloat(itemPrice*orderQuantity);
-                 //updateQuantity(connection, itemID, itemQuantity.quantityNum)
-              }
+                 finalCost = parseFloat(itemPrice*orderQuantity);
+                 updateQuantity(connection, itemId, itemQuantity.quantityNum)
+              }/*
               else
                {
                  console.log("\x1b[31m  Sorry. Please reduce your quantity.\x1b[0m")
                  console.log("need new prompt here")
                  process.exit(0)
-               }
-               
+               */               
           })
 }
 
@@ -146,12 +151,12 @@ function executeQuery(connection, query, qCallback) {
         {
             connection.query(query, function (err, rows, fields) {
               console.log("release")
-                connection.release();
+                //connection.release();
                 if (err) {
-                    return qCallback(err, null);
+                    return qCallback(err, null,connection);
                 }
                 console.log("cal qCallback")
-                return qCallback(null, rows);
+                return qCallback(null, rows,connection);
             })
         }
         /*
@@ -167,7 +172,7 @@ console.log("getQuantity before ")
      executeQuery(connection, query3, qCallback) 
 }
 
-function qCallback(err,row) {
+function qCallback(err,row,connection) {
   console.log("in qCallback")
       if (err) { 
       console.log("error "+err)
@@ -177,8 +182,9 @@ function qCallback(err,row) {
     itemDescription = row[0].product_name;
        //console.log("fields "+fields.quan)
     console.log("Callback quantity available is "+inventoryQuantity+" price "+itemPrice+" "+itemDescription);    //qResult[0].quan);
-    getCustomerQuantity();   
+    getCustomerQuantity(connection);
 }
+/*
 async function getProductQuantity(connection,id) {
     var query3 = "SELECT stock_quantity as quan, price,product_name FROM products WHERE item_id ="+id
     console.log(query3);
@@ -209,6 +215,7 @@ query
       connection.resume();
       console.log("resume row "+row)
       */
+      /*
       inventoryQuantity = row[0].quan;
     itemPrice = row[0].price;
     itemDescription = row[0].product_name;
@@ -216,6 +223,7 @@ query
     console.log("quantity available is "+inventoryQuantity+" price "+itemPrice+" "+itemDescription);    //qResult[0].quan);
 
     });
+
   //})
   /*.on('end', function() {
 console.log("end")
@@ -236,6 +244,7 @@ debugger;
 
     //return(qResult[0].quan);
  })*/
+ /*
     console.log("getProductQ inventoryQuantity "+inventoryQuantity)
     if ( inventoryQuantity )
     {
@@ -248,7 +257,7 @@ debugger;
     }
    // return(1)
    //return(qResult[0].quan)
-}
+}*/
 
 function getCurrentProducts(connection) {
 	var query1 = "SELECT item_id as id,product_name as product,price,stock_quantity FROM products"
@@ -284,6 +293,8 @@ debugger;
         message: "  Please select enter product id you would like to buy",
         name: "itemID",
         validate: function (value) {
+        //if (value === quitstring)
+        //  process.exit(0);
         if (isNaN(value) === false) //&& parseInt(value) > 0 && parseInt(value) <= 10) 
            return true;
         else
@@ -359,9 +370,9 @@ console.log("before upd orderQuantity "+orderQuantity)
               {
                 if (orderQuantity>1)
                  //  console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[0m are available!")     
-                   console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemDescription+"\x1b[0m are available!")     
+                   console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemDescription.trim()+"\x1b[0m are available!")     
                  else
-                   console.log("\x1b[37m\n  YAY!  \x1b[36m"+itemDescription+"\x1b[0m is available!")
+                   console.log("\x1b[37m\n  YAY!  \x1b[36m"+itemDescription.trim()+"\x1b[0m is available!")
                    //console.log("\x1b[37m\n  YAY!  \x1b[0m is available!")      
  
 /*
