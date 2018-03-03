@@ -52,14 +52,15 @@ Type:
 *     Total Cost: $74.85
 *     Thank you for your business!
 
-##### The user can exit any time by entering q in either the product id input or the quantity input. 
-
 ##### Invalid input messages for the quantity input will be in red text. The app will then aak the user to input again.
 ![screen](img/b7.png)
 
 
 ##### After the order, the bamazon inventory list will return and ask for another order.
 ![screen](img/b11.png)
+
+##### The user can exit any time by entering q in either the product id input or the quantity input. 
+![screen](img/b15.png)
 
 
 #### Note: to setup to use the bamazonCustomer app
