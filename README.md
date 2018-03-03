@@ -58,5 +58,12 @@ Type:
 ##### After the order, the bamazon inventory list will return and ask for another order.
 
 
+#### Note: to setup to use the bamazonCustomer app
+ * use bamazon.sql to create the bamazon mysql database and insert test data.
+ * npm install
+
+
+
+
 
 
