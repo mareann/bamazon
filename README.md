@@ -19,8 +19,8 @@ Type:
 
    ##     BAMAZON BEST SELLERS        (enter q to exit)
 
-* Product Id  Description                                            Price, USD  Avail
-* ----------  -----------------------------------------------------  ----------  -----
+#### Product Id  Description                                            Price, USD  Avail
+----------  -----------------------------------------------------  ----------  -----
 * 100         BOOK:    12 Rules for Life An Antidote to Chaos             13.50  3
 * 101         BOOK:    Harry Potter And The Goblet Of Fire                 9.50  6
 * 102         BOOK:    End of Watch A Novel                               16.50  1
