@@ -179,8 +179,8 @@ function getCurrentProducts(connection) {
       {
         console.log("error: getCurrentProducts")
         throw err;
-      }                  //Product Id
-    console.log("\n\x1b[36m             BAMAZON BEST SELLERS\x1b[0m        (enter q to exit)\n")
+      }
+    console.log("\n\x1b[36m            BAMAZON BEST SELLERS\x1b[0m        (enter q to exit)\n")
     
     inventoryQuantityberDisplayed = prodResult.length;
 
