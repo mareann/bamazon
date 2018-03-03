@@ -7,12 +7,13 @@ It uses inquirer, mysql, and easy-table npm packages.
 To start bamazonCustomer.js app:
 
 Type:
-node bamazonCustomer
+#### node bamazonCustomer
 
-After the app starts, it asks for the product id of the item the user would like to purchase. After any invalid input a red error message will be shown and the user is prompted to reenter the product id.
+##### After the app starts, it asks for the product id of the item the ##### user would like to purchase. After any invalid input a red error ##### message will be shown and the user is prompted to reenter the 
+##### product id.
 
 
-   #     BAMAZON BEST SELLERS        (enter q to exit)
+   ##     BAMAZON BEST SELLERS        (enter q to exit)
 
 * Product Id  Description                                            Price, USD  Avail
 * ----------  -----------------------------------------------------  ----------  -----
@@ -31,6 +32,18 @@ After the app starts, it asks for the product id of the item the user would like
 * ?   Please select enter product id you would like to buy:    Invalid input. Please try again
 * ?   Please select enter product id you would like to buy:  0  Invalid input. Please try again
 * ?   Please select enter product id you would like to buy:  111  Invalid id. Please try again
-* ?   Please select enter product id you would like to buy:  105
+* ?   Please select enter product id you would like to buy:  103
+
+
+    ###### Next the app will ask how many of the item the user would like to purchase. If that
+    ###### Quantity is available. It will remove those from inventory and print out the total sale.
+
+*   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? 3
+* 
+*     YAY! 3 Blu-ray: Justice League with Henry Cavill, Amy Adams are available!
+*     Order processed successfully!
+*     Total Cost: $74.85
+* 
+*     Thank you for your business!
 
 
