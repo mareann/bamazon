@@ -57,13 +57,17 @@ function updateQuantity(connection,item,quantity) {
   	  console.log(result.affectedRows + " record(s) updated");
   	if (result.affectedRows)
   	{
-  	  console.log("  \x1b[32mOrder processed successfully!\x1b[0m")
-  	  console.log("  Total Cost: \x1b[32m$"+finalCost.toFixed(2)+"\x1b[0m\n\n  Hope to see you soon!")
-  	}
-  	process.exit(0)
+  	  console.log("    \x1b[32mOrder processed successfully!\x1b[0m"); //green text
+  	  console.log("    Total Cost: \x1b[32m$"+finalCost.toFixed(2)+"\x1b[0m\n\n    Thank you for your business!")
+    }
+
+    //restart bamazon
+    getCurrentProducts(connection);
+  	
   });
 }
-/* FgBlack = "\x1b[30m"
+/* 
+FgBlack = "\x1b[30m"
 FgRed = "\x1b[31m"
 FgGreen = "\x1b[32m"
 FgYellow = "\x1b[33m"
@@ -72,7 +76,7 @@ FgMagenta = "\x1b[35m"
 FgCyan = "\x1b[36m"
 FgWhite = "\x1b[37m"  */ 
 
-function getCustomerQuantity(connection){
+function getCustomerQuantity(connection) {
 
             inquirer.prompt([
             {
@@ -82,15 +86,17 @@ function getCustomerQuantity(connection){
               validate: function (value) {
                    if (value == quitString || value == 'q')
                     {
-                      console.log("\x1b[32m\n\n  See you next time!\x1b[0m")
+                      console.log("\x1b[32m\n\n    See you next time!\x1b[0m")
                       process.exit(0)
                     }
                    if (value < inventoryQuantity && isNaN(value) === false && parseInt(value) > 0)
                      return true;
                    else
                    { 
-                    console.log(" \x1b[31mPlease reduce quantity or enter q to quit\x1b[0m");
-                    
+                     if ( value == 0 )
+                      console.log(" \x1b[31mPlease enter valid quantity or enter q to quit\x1b[0m"); //red text
+                     else
+                      console.log(" \x1b[31mPlease reduce quantity or enter q to quit\x1b[0m"); //red text
                    }
                 }     
             }
@@ -102,9 +108,9 @@ function getCustomerQuantity(connection){
               if (orderQuantity <= inventoryQuantity)
               {
                  if (orderQuantity>1)
-                   console.log("\x1b[37m\n  YAY!  "+orderQuantity+" \x1b[36m"+itemDescription.trim()+"\x1b[0m are available!")     
+                   console.log("\x1b[37m\n    YAY! "+orderQuantity+" \x1b[36m"+itemDescription.trim()+"\x1b[0m are available!")     
                  else
-                   console.log("\x1b[37m\n  YAY!  \x1b[36m"+itemDescription.trim()+"\x1b[0m is available!")
+                   console.log("\x1b[37m\n    YAY! \x1b[36m"+itemDescription.trim()+"\x1b[0m is available!")
 
                  finalCost = parseFloat(itemPrice*orderQuantity);
                  updateQuantity(connection, itemId, itemQuantity.quantityNum)
@@ -139,10 +145,7 @@ function getQuantity(connection,id) {
 function qCallback(err,row,connection) {
 
     if (row.length == 0)
-    {
-      console.log("nodata")
       return(-1);
-    }
     if (err) 
      { 
       console.log("Error: qCallback "+err)
@@ -154,8 +157,10 @@ function qCallback(err,row,connection) {
        //console.log("fields "+fields.quan)
     if (debug)
       console.log("Callback quantity available is "+inventoryQuantity+" price "+itemPrice+" "+itemId+" "+itemDescription);    //qResult[0].quan);
+    
     getCustomerQuantity(connection);
 }
+
 function validItemId(id){
   for (var i=0; i<inventory.length;i++)
   {
@@ -165,6 +170,7 @@ function validItemId(id){
   console.log("\x1b[31m  Invalid id. Please try again\x1b[0m")
   return(false)
 }
+
 function getCurrentProducts(connection) {
 	var query1 = "SELECT item_id as id,product_name as product,price,stock_quantity FROM products"
 //debugger;
@@ -174,12 +180,13 @@ function getCurrentProducts(connection) {
         console.log("error: getCurrentProducts")
         throw err;
       }                  //Product Id
-    console.log("\n\x1b[36m             BAMAZON BEST SELLERS\x1b[0m\n")
-    //inventory = prodResult;
+    console.log("\n\x1b[36m             BAMAZON BEST SELLERS\x1b[0m        (enter q to exit)\n")
+    
     inventoryQuantityberDisplayed = prodResult.length;
 
     var tbl = new Table
- var i = 0;
+    var i = 0;
+    
     prodResult.forEach(function(product) {
       tbl.cell('Product Id', product.id)
       tbl.cell('Description', product.product)
@@ -188,25 +195,29 @@ function getCurrentProducts(connection) {
       tbl.newRow()
       inventory[i++]=product.id;
     })
-console.log("inventory "+inventory)
-   console.log(tbl.toString());
+   if (debug )
+     console.log("inventory ids: "+inventory)
 
+   // print table to console screen
+   console.log(tbl.toString());
+   console.log("\n\n\n\n\n\n\n")
     // Create a "Prompt" for input.
     inquirer
     .prompt([
       // Here we create a basic text prompt.
       {
         type: "input",
-        message: "  \x1b[36mPlease select enter product id you would like to buy: \x1b[0m",
+        message: "  \x1b[36mPlease select enter product id you would like to buy: \x1b[0m", //cyan text
         name: "itemID",
         validate: function (value) {
         if (value == quitString || value == 'q')
          {
-           console.log("\x1b[32m\n\n  See you next time!\x1b[0m")
+           console.log("\x1b[32m\n\n    See you next time!\x1b[0m"); //green text
            process.exit(0);
          }
         if (isNaN(value) === false && parseInt(value) > 0)
         {
+          // verify the entered itemId is from the product table
           if (validItemId(value))
            return true;
           else
@@ -214,7 +225,7 @@ console.log("inventory "+inventory)
         }
         else
          {
-           console.log("\x1b[31m  Invalid input. Please try again\x1b[0m")
+           console.log("\x1b[31m  Invalid input. Please try again\x1b[0m"); //red text
            return false;
          }
         }                 
@@ -228,7 +239,7 @@ console.log("inventory "+inventory)
       
       if(itemId===quitString || itemId == 'q')
         {
-          console.log("\x1b[32m\n\n  See you next time!\x1b[0m")
+          console.log("\x1b[32m\n\n    See you next time!\x1b[0m")
           process.exit(0)
         }
       else 
