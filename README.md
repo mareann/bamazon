@@ -55,6 +55,8 @@ Type:
 ##### The user can exit any time by entering q in either the product id input or the quantity input. 
 
 ##### Invalid input messages for the quantity input will be in red text. The app will then aak the user to input again.
+![screen](img/b7.png)
+
 
 ##### After the order, the bamazon inventory list will return and ask for another order.
 
