@@ -1,0 +1,24 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "storefront",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mareann/bamazon.git"
+  },
+  "author": "maryann jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mareann/bamazon/issues"
+  },
+  "homepage": "https://github.com/mareann/bamazon#readme",
+  "dependencies": {
+    "easy-table": "^1.1.1",
+    "inquirer": "^5.1.0",
+    "mysql": "^2.15.0"
+  }
+}
