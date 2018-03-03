@@ -9,8 +9,7 @@ To start bamazonCustomer.js app:
 Type:
 #### node bamazonCustomer
 
-##### After the app starts, it asks for the product id of the item the ##### user would like to purchase. After any invalid input a red error ##### message will be shown and the user is prompted to reenter the 
-##### product id.
+##### After the app starts, it asks for the product id of the item the user would like to purchase. After any invalid input a red error message will be shown and the user is prompted to reenter the product id.
 
 
    ##     BAMAZON BEST SELLERS        (enter q to exit)
@@ -35,8 +34,7 @@ Type:
 * ?   Please select enter product id you would like to buy:  103
 
 
-    ###### Next the app will ask how many of the item the user would like to purchase. If that
-    ###### Quantity is available. It will remove those from inventory and print out the total sale.
+    ###### Next the app will ask how many of the item the user would like to purchase. If that quantity is available. It will remove those from inventory and print out the total sale.
 
 *   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? 3
 * 
