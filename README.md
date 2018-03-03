@@ -59,6 +59,7 @@ Type:
 
 
 ##### After the order, the bamazon inventory list will return and ask for another order.
+![screen](img/b11.png)
 
 
 #### Note: to setup to use the bamazonCustomer app
