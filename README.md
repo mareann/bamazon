@@ -4,12 +4,17 @@ Amazon-like storefront
 Amazon-like storefront using node, and MySQL. The app will take in orders from customers and deplete stock from the store's inventory.
 It uses inquirer, mysql, and easy-table npm packages.
 
+To view a video of the app:
+https://youtu.be/R6TUbIDd-aM 
+
 To start bamazonCustomer.js app:
 
 Type:
 #### node bamazonCustomer
 
 ##### After the app starts, it asks for the product id of the item the user would like to purchase. After any invalid input a red error message will be shown and the user is prompted to reenter the product id.
+
+##### Below is a sample screen
 
 
    ##     BAMAZON BEST SELLERS        (enter q to exit)
@@ -28,13 +33,15 @@ Type:
 * 109         CD:      Rumours Fleetwood Mac                              20.95  3
 
 * ?   Please select enter product id you would like to buy: 
+
+
 * ?   Please select enter product id you would like to buy:    Invalid input. Please try again
 * ?   Please select enter product id you would like to buy:  0  Invalid input. Please try again
 * ?   Please select enter product id you would like to buy:  111  Invalid id. Please try again
 * ?   Please select enter product id you would like to buy:  103
 
 
-    ###### Next the app will ask how many of the item the user would like to purchase. If that quantity is available. It will remove those from inventory and print out the total sale.
+##### Next the app will ask how many of the item the user would like to purchase. If that quantity is available. It will remove those from inventory and print out the total sale.
 
 *   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? 3
 * 
@@ -43,5 +50,13 @@ Type:
 *     Total Cost: $74.85
 * 
 *     Thank you for your business!
+
+##### The user can exit any time by entering q in either the product id input or the quantity input. 
+
+##### Any invalid input in the quantity input will be in red text. The app will then aak the user to input again.
+
+##### After the order, the bamazon inventory list will return and ask for another order.
+
+
 
 
