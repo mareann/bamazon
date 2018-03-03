@@ -5,7 +5,7 @@ Amazon-like storefront using node, and MySQL. The app will take in orders from c
 It uses inquirer, mysql, and easy-table npm packages.
 
 To view a video of the app:
-https://youtu.be/R6TUbIDd-aM 
+http://www.youtube.com/watch?v=GEAzREoXMeo
 
 To start bamazonCustomer.js app:
 
