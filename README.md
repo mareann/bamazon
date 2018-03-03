@@ -34,21 +34,18 @@ Type:
 
 * ?   Please select enter product id you would like to buy: 
 
-
-* ?   Please select enter product id you would like to buy:    Invalid input. Please try again
-* ?   Please select enter product id you would like to buy:  0  Invalid input. Please try again
-* ?   Please select enter product id you would like to buy:  111  Invalid id. Please try again
-* ?   Please select enter product id you would like to buy:  103
+* ?   Please select enter product id you would like to buy:    #Invalid input. Please try again
+* ?   Please select enter product id you would like to buy:  ###0  #Invalid input. Please try again
+* ?   Please select enter product id you would like to buy:  ###111  #Invalid id. Please try again
+* ?   Please select enter product id you would like to buy:  ###103
 
 
 ##### Next the app will ask how many of the item the user would like to purchase. If that quantity is available. It will remove those from inventory and print out the total sale.
 
-*   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? 3
-* 
+*   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? #3
 *     YAY! 3 Blu-ray: Justice League with Henry Cavill, Amy Adams are available!
 *     Order processed successfully!
 *     Total Cost: $74.85
-* 
 *     Thank you for your business!
 
 ##### The user can exit any time by entering q in either the product id input or the quantity input. 
