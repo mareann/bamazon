@@ -40,7 +40,8 @@ Type:
 * ?   Please select enter product id you would like to buy:  **103**
 
 
-##### Next the app will ask how many of the item the user would like to purchase. If that quantity is available. It will remove those from inventory and print out the total sale.
+##### Next the app will ask how many of the item the user would like to purchase. 
+##### If that quantity is available. It will remove those from inventory and print out the total sale.
 
 *   How many Blu-ray: Justice League with Henry Cavill, Amy Adams would you like to buy? **3**
 *     YAY! 3 Blu-ray: Justice League with Henry Cavill, Amy Adams are available!
