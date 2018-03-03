@@ -17,6 +17,11 @@ var pool = mysql.createPool({
   database: "bamazon"
 });
 
+
+
+/////////////////////////////////////////////////////////////////
+// connect to database
+/////////////////////////////////////////////////////////////////
 pool.getConnection( function(err,connection) {
   if (err) 
    {
@@ -28,8 +33,8 @@ pool.getConnection( function(err,connection) {
   getCurrentProducts(connection);
 });
 
-var inventory = [];
 
+var inventory = [];
 var itemPrice = 0;
 var itemId = '';           // item description
 var inventoryQuantity = 0; //quantity available to sell
@@ -40,6 +45,10 @@ var quitString = "quit";
 var debug = false;
 var prodResult = {};
 
+
+/////////////////////////////////////////////////////////////////
+// update order quantity in products mysql table
+/////////////////////////////////////////////////////////////////
 function updateQuantity(connection,item,quantity) {
   if (debug)
     console.log("updateQuantity "+item+" "+quantity+" "+connection.threadId)
@@ -76,6 +85,10 @@ FgMagenta = "\x1b[35m"
 FgCyan = "\x1b[36m"
 FgWhite = "\x1b[37m"  */ 
 
+
+/////////////////////////////////////////////////////////////////
+// customer input quantity
+/////////////////////////////////////////////////////////////////
 function getCustomerQuantity(connection) {
 
             inquirer.prompt([
@@ -118,6 +131,9 @@ function getCustomerQuantity(connection) {
           })
 }
 
+/////////////////////////////////////////////////////////////////
+// Execute query
+/////////////////////////////////////////////////////////////////
 function executeQuery(connection, query, qCallback) {
 
   connection.query(query, function (err, rows, fields) {
@@ -142,6 +158,10 @@ function getQuantity(connection,id) {
   executeQuery(connection, query3, qCallback);
 }
 
+
+/////////////////////////////////////////////////////////////////
+// callback function for executeQuery
+/////////////////////////////////////////////////////////////////
 function qCallback(err,row,connection) {
 
     if (row.length == 0)
@@ -161,6 +181,10 @@ function qCallback(err,row,connection) {
     getCustomerQuantity(connection);
 }
 
+/////////////////////////////////////////////////////////////////
+// verify itemId
+// return true is valid  return false if invalid
+/////////////////////////////////////////////////////////////////
 function validItemId(id){
   for (var i=0; i<inventory.length;i++)
   {
@@ -171,6 +195,11 @@ function validItemId(id){
   return(false)
 }
 
+/////////////////////////////////////////////////////////////////
+// retrieve products from mysql products table
+// use easy.table to display to screen
+// user enters id of item they wish to purchase
+/////////////////////////////////////////////////////////////////
 function getCurrentProducts(connection) {
 	var query1 = "SELECT item_id as id,product_name as product,price,stock_quantity FROM products"
 //debugger;
