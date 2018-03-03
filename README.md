@@ -15,7 +15,7 @@ Type:
 ##### After the app starts, it asks for the product id of the item the user would like to purchase. After any invalid input a red error message will be shown and the user is prompted to reenter the product id.
 
 ##### Below is a sample screen
-
+[[https://github.com/mareann/repository/bamazon/master/img/b3.png|alt=screen]]
 
    ##     BAMAZON BEST SELLERS        (enter q to exit)
 
