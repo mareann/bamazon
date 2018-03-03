@@ -17,6 +17,8 @@ Type:
 ##### Below is a sample screen
 [https://github.com/mareann/bamazon/blob/master/img/b3.png]
 
+https://github.com/mareann/bamazon/blob/master/img/b5.png
+
    ##     BAMAZON BEST SELLERS        (enter q to exit)
 
 #### Product Id  Description                                            Price, USD  Avail
